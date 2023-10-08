@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Box from "../../component/box";
 import Column from "../../component/column";
 import Title from "../../component/title";
@@ -10,7 +10,7 @@ import PostItem from "../post-item";
 import "./index.css";
 
 
-function Container() {
+function Container({ children }) {
     const [status, setStatus] = useState(null)
     const [message, setMessage] = useState("")
     const [data, setData] = useState(null)
@@ -47,12 +47,20 @@ function Container() {
         isEmpty: raw.list.length === 0
     })
 
-    if (status === null) {
+    useEffect(() => {
+        alert('render')
         getData()
-    }
+
+        const intervalId = setInterval(() => getData, 5000)
+
+        return () => {
+            clearInterval(intervalId)
+        }
+    }, [])
 
     return (
         <Column>
+            {children}
             <Box>
                 <Column>
                     <Title>Home</Title>

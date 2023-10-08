@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Box from "../../component/box";
 import PostContent from "../../component/post-content";
 import Column from "../../component/column";
@@ -55,12 +55,15 @@ export default function PostItem({ id, username, text, date }) {
     const [isOpen, setOpen] = useState(false)
 
     const handleOpen = async () => {
-        if (status === null) {
-            getData()
-        }
-
         setOpen(!isOpen)
     }
+
+    useEffect(() => {
+        if (isOpen === true) {
+            // alert(isOpen)
+            getData()
+        }
+    }, [isOpen])
 
     return (
         <Box style={{ padding: "0" }}>

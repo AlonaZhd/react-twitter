@@ -3,7 +3,7 @@ import Column from "../column";
 import "./index.css";
 
 function PostContent({ username, date, text }) {
-    console.log(username, date, text)
+    // console.log(username, date, text)
     return (
         <Column>
             <div className="post-content">
