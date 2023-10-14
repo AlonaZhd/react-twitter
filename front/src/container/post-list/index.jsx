@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useReducer } from "react";
 import Box from "../../component/box";
 import Column from "../../component/column";
 import Title from "../../component/title";
@@ -7,16 +7,16 @@ import { Alert, LOAD_STATUS, Skeleton } from "../../component/load";
 import { getDate } from "../../util/getDate";
 import PostItem from "../post-item";
 
+
 import "./index.css";
+import { REQUEST_ACTION_TYPE, requestInitialState, requestReducer } from "../../util/request";
 
 
 function Container({ children }) {
-    const [status, setStatus] = useState(null)
-    const [message, setMessage] = useState("")
-    const [data, setData] = useState(null)
+    const [state, dispatch] = useReducer(requestReducer, requestInitialState)
 
     const getData = async () => {
-        setStatus(LOAD_STATUS.PROGRESS)
+        dispatch({ type: REQUEST_ACTION_TYPE.PROGRESS })
 
         try {
             const res = await fetch("http://localhost:4000/post-list")
@@ -24,15 +24,21 @@ function Container({ children }) {
             const data = await res.json()
 
             if (res.ok) {
-                setData(convertData(data))
-                setStatus(LOAD_STATUS.SUCCESS)
+                dispatch({
+                    type: REQUEST_ACTION_TYPE.SUCCESS,
+                    payload: convertData(data),
+                })
             } else {
-                setMessage(data.message)
-                setStatus(LOAD_STATUS.ERROR)
+                dispatch({
+                    type: REQUEST_ACTION_TYPE.ERROR,
+                    payload: data.message,
+                })
             }
         } catch (error) {
-            setMessage(data.message)
-            setStatus(LOAD_STATUS.ERROR) 
+            dispatch({
+                type: REQUEST_ACTION_TYPE.ERROR,
+                payload: error.message,
+            })
         }
     }
 
@@ -71,7 +77,7 @@ function Container({ children }) {
                     ></PostCreate>
                 </Column>
             </Box>
-            {status === LOAD_STATUS.PROGRESS && (
+            {state.status === LOAD_STATUS.PROGRESS && (
                 <>
                     <Box>
                         <Skeleton></Skeleton>
@@ -82,16 +88,16 @@ function Container({ children }) {
                 </>
             )}
 
-            {status === LOAD_STATUS.ERROR && (
-                <Alert status={status} message={message}></Alert>
+            {state.status === LOAD_STATUS.ERROR && (
+                <Alert status={state.status} message={state.message}></Alert>
             )}
 
-            {status === LOAD_STATUS.SUCCESS && (
+            {state.status === LOAD_STATUS.SUCCESS && (
                 <Fragment>
-                    {data.isEmpty ? (
+                    {state.data.isEmpty ? (
                         <Alert message="Список постів пустий"></Alert>
                     ) : (
-                        data.list.map((item) => (
+                        state.data.list.map((item) => (
                             <Fragment key={item.id}>
                                 <PostItem {...item}></PostItem>
                             </Fragment>
