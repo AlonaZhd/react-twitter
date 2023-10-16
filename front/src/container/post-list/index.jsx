@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useReducer } from "react";
+import { Fragment, useContext, useEffect, useReducer } from "react";
 import Box from "../../component/box";
 import Column from "../../component/column";
 import Title from "../../component/title";
@@ -10,6 +10,7 @@ import PostItem from "../post-item";
 
 import "./index.css";
 import { REQUEST_ACTION_TYPE, requestInitialState, requestReducer } from "../../util/request";
+import { ThemeContext } from "../../App";
 
 
 function Container({ children }) {
@@ -64,6 +65,9 @@ function Container({ children }) {
         }
     }, [])
 
+    const theme = useContext(ThemeContext)
+    console.log(theme)
+
     return (
         <Column>
             {children}
@@ -71,6 +75,7 @@ function Container({ children }) {
                 <Column>
                     <Title>Home</Title>
                     <PostCreate
+                       
                         onCreate={getData}
                         placeholder="what is happening?!"
                         button="Post"
@@ -98,8 +103,11 @@ function Container({ children }) {
                         <Alert message="Список постів пустий"></Alert>
                     ) : (
                         state.data.list.map((item) => (
-                            <Fragment key={item.id}>
-                                <PostItem {...item}></PostItem>
+                            <Fragment 
+                                key={item.id}>
+                                <PostItem 
+                                
+                                {...item}></PostItem>
                             </Fragment>
                         ))
                     )}

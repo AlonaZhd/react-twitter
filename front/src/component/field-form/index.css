@@ -10,6 +10,11 @@
     border-radius: 24px;
 }
 
+.field-form__button--dark {
+    color: lightgray;
+    background-color: #4b4b4b;
+}
+
 .field-form__button:disabled {
     cursor: default;
     opacity: 0.7 !important;
@@ -27,4 +32,8 @@
     font-size: 14px;
     line-height: 150%;
     flex-grow: 1;
+}
+
+.field-form__field--dark {
+    color: lightgray;
 }

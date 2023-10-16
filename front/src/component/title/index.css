@@ -1,5 +1,16 @@
+.title__wrapp {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .title {
     font-size: 24px;
     font-weight: 700;
     line-height: 100%;
+    color: #0050ff;
+}
+
+.title--dark {
+    color: lightgray;
 }

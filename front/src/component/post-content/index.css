@@ -9,6 +9,10 @@
     color: #000;
 }
 
+.post-content__username--dark {
+    color: lightgray;
+}
+
 .post-content__date {
     font-size: 14px;
     color: #888888;
@@ -17,4 +21,8 @@
 .post-content__text {
     font-size: 14px;
     color: #000;
+}
+
+.post-content__text--dark {
+    color: lightgray;
 }

@@ -51,6 +51,7 @@ function PostCreate({ onCreate, placeholder, button, id=null }) {
     return (
         <Column>
             <FieldForm
+               
                 placeholder={placeholder}
                 button={button}
                 onSubmit={handleSubmit}

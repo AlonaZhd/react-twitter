@@ -3,3 +3,7 @@
     margin: 0 auto;
     max-width: 600px;
 }
+
+.page--dark {
+    background-color: #2e2e2e;
+}
